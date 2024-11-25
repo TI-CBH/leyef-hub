@@ -1,7 +1,7 @@
 [build]
   command = "nuxt build"
   publish = ".output/public"
-  edge_functions = true
+  edge_functions = "edge-functions"
 
 [[redirects]]
   from = "/_nuxt/*"

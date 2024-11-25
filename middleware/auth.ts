@@ -1,4 +1,4 @@
-import { defineNuxtRouteMiddleware, navigateTo } from '#imports'
+import { defineNuxtRouteMiddleware, navigateTo } from '#app'
 import type { RouteLocationNormalized } from 'vue-router'
 import { useAuth } from '~/composables/useAuth'
 

@@ -9,7 +9,31 @@
           Manage your professional tasks and projects
         </p>
       </div>
+      
+      <div class="flex gap-4">
+        <button
+          @click="showNewTaskModal = true"
+          class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors"
+        >
+          <PlusIcon class="w-5 h-5 inline-block mr-2" />
+          New Task
+        </button>
+        <button
+          @click="showNewProjectModal = true"
+          class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors"
+        >
+          <FolderPlusIcon class="w-5 h-5 inline-block mr-2" />
+          New Project
+        </button>
+      </div>
     </header>
+
+    <!-- Project Board -->
+    <ProjectBoard
+      :projects="projects"
+      @add="showNewProjectModal = true"
+      @edit="editProject"
+    />
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
       <!-- Tasks Section -->
@@ -51,22 +75,35 @@
       @close="closeNoteModal"
       @submit="submitNote"
     />
+
+    <!-- Project Modal -->
+    <ProjectFormModal
+      v-if="showProjectModal"
+      :project="selectedProject"
+      @close="closeProjectModal"
+      @submit="submitProject"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
+import { PlusIcon, FolderPlusIcon } from '@heroicons/vue/outline'
 import { useTasks } from '~/composables/useTasks'
 import { useNotes } from '~/composables/useNotes'
-import type { Task, Note } from '~/types'
+import { useProjects } from '~/composables/useProjects'
+import type { Task, Note, Project } from '~/types'
 
 // Stores
 const tasksStore = useTasks()
 const notesStore = useNotes()
+const projectsStore = useProjects()
 
 // State
 const showNewTaskModal = ref(false)
 const showNoteModal = ref(false)
+const showProjectModal = ref(false)
 const selectedNote = ref<Note | undefined>(undefined)
+const selectedProject = ref<Project | undefined>(undefined)
 
 // Computed
 const workTasks = computed(() => {
@@ -75,6 +112,10 @@ const workTasks = computed(() => {
 
 const workNotes = computed(() => {
   return notesStore.getNotesByHub('work')
+})
+
+const projects = computed(() => {
+  return projectsStore.projects
 })
 
 // Task Methods
@@ -127,9 +168,30 @@ const deleteNote = async (note: Note) => {
   }
 }
 
+// Project Methods
+const editProject = (project: Project) => {
+  selectedProject.value = project
+  showProjectModal.value = true
+}
+
+const closeProjectModal = () => {
+  selectedProject.value = undefined
+  showProjectModal.value = false
+}
+
+const submitProject = async (projectData: Omit<Project, 'id' | 'created_at' | 'updated_at' | 'tasks'>) => {
+  if (selectedProject.value) {
+    await projectsStore.updateProject(selectedProject.value.id, projectData)
+  } else {
+    await projectsStore.addProject(projectData)
+  }
+  closeProjectModal()
+}
+
 // Fetch data on mount
 onMounted(() => {
   tasksStore.fetchTasks()
   notesStore.fetchNotes()
+  projectsStore.fetchProjects()
 })
 </script> 

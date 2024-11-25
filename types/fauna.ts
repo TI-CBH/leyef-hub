@@ -1,8 +1,8 @@
-import type { values } from 'faunadb'
+import type { Collection } from 'faunadb'
 
 export interface FaunaRef {
   id: string
-  collection: values.Collection
+  collection: typeof Collection
 }
 
 export interface FaunaResponse<T> {
@@ -13,6 +13,6 @@ export interface FaunaResponse<T> {
 
 export interface FaunaPageResponse<T> {
   data: FaunaResponse<T>[]
-  after?: values.Page
-  before?: values.Page
+  after?: FaunaRef
+  before?: FaunaRef
 } 

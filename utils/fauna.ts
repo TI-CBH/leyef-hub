@@ -20,10 +20,13 @@ export const taskQueries = {
         q.Lambda('ref', q.Get(q.Var('ref')))
       )
     )
-    return result.data.map((doc) => ({
-      id: doc.ref.id,
-      ...doc.data
-    }))
+    return result.data.map((doc) => {
+      const { id, ...data } = doc.data
+      return {
+        id: doc.ref.id,
+        ...data
+      }
+    })
   },
 
   async createTask(task: Omit<Task, 'id' | 'created_at' | 'updated_at'>): Promise<Task> {
@@ -37,9 +40,10 @@ export const taskQueries = {
         }
       })
     )
+    const { id, ...data } = result.data
     return {
       id: result.ref.id,
-      ...result.data
+      ...data
     }
   },
 
@@ -53,9 +57,10 @@ export const taskQueries = {
         }
       })
     )
+    const { id: _, ...data } = result.data
     return {
       id: result.ref.id,
-      ...result.data
+      ...data
     }
   },
 

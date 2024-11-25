@@ -14,15 +14,15 @@ export const useTasks = defineStore('tasks', {
 
   getters: {
     getTasksByHub: (state) => (hubId: string) => {
-      return state.tasks.filter(task => task.hub_id === hubId)
+      return state.tasks.filter((task: Task) => task.hub_id === hubId)
     },
     
     getTasksByPriority: (state) => (priority: Task['priority']) => {
-      return state.tasks.filter(task => task.priority === priority)
+      return state.tasks.filter((task: Task) => task.priority === priority)
     },
     
     getCompletedTasks: (state) => {
-      return state.tasks.filter(task => task.completed)
+      return state.tasks.filter((task: Task) => task.completed)
     }
   },
 
@@ -58,7 +58,7 @@ export const useTasks = defineStore('tasks', {
       try {
         // TODO: Implement FaunaDB mutation
         // const result = await updateTask(id, updates)
-        const index = this.tasks.findIndex(task => task.id === id)
+        const index = this.tasks.findIndex((task: Task) => task.id === id)
         if (index !== -1) {
           this.tasks[index] = { ...this.tasks[index], ...updates }
         }
@@ -74,7 +74,7 @@ export const useTasks = defineStore('tasks', {
       try {
         // TODO: Implement FaunaDB mutation
         // await deleteTask(id)
-        this.tasks = this.tasks.filter(task => task.id !== id)
+        this.tasks = this.tasks.filter((task: Task) => task.id !== id)
       } catch (error) {
         console.error('Error deleting task:', error)
       } finally {

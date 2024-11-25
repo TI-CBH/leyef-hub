@@ -1,0 +1,136 @@
+Create a modern JAMstack web application called "Leyef Hub" - a personal life management dashboard with the following specifications:
+
+Project Setup:
+- Initialize a Nuxt.js 3 project in SSG mode
+- Configure for Netlify deployment
+- Set up Netlify Identity for authentication
+- Implement FaunaDB for data storage
+- Use Tailwind CSS for styling
+- Configure PWA capabilities
+
+Brand Identity:
+- Color Scheme:
+  * Primary: #3B82F6 (Modern blue)
+  * Secondary: #10B981 (Fresh mint)
+  * Accent: #8B5CF6 (Soft purple)
+  * Neutral: #1F2937 (Deep gray)
+  * Background: #F9FAFB (Light gray)
+- Typography: Inter font family
+- Modern, clean UI with ample white space
+- Smooth transitions and micro-interactions
+
+Core Features:
+
+1. Authentication & User Management:
+- Email/password signup/login using Netlify Identity
+- User profile management
+- Password reset functionality
+- Persistent session management
+
+2. Dashboard Layout:
+- Responsive grid layout with three or more main sections:
+  * Home Hub
+  * Work Hub
+  * Side Business Hub (option for multiple side businesses)
+- Quick-access sidebar navigation
+- Collapsible sections
+- Summary cards for each area
+
+3. Home Hub Features:
+- Integration from google
+- Family calendar 
+- Household task tracker
+- Shopping list manager
+- Bill payment reminder system
+- Notes section for family matters
+
+4. Work Hub Features:
+- Project status board
+- Meeting scheduler
+- Task priority matrix
+- Deadline tracker
+- Work notes organization
+
+5. Side Business Hub Features:
+- Basic income/expense tracker
+- Client/project management
+- Goal setting and tracking
+- Business metrics dashboard
+- Business notes section
+- Optional budget builder with tracker
+
+6. Common Features Across All Hubs:
+- Task creation and management
+- Calendar events
+- Quick notes
+- Priority flagging
+- Search functionality
+- Filter and sort capabilities
+
+Technical Requirements:
+
+1. Frontend:
+- Vue 3 Composition API
+- Pinia for state management
+- Vue Router for navigation
+- Responsive design using Tailwind CSS
+- Component-based architecture
+- Dark/light mode toggle
+
+2. Backend (Serverless):
+- Netlify Functions for API endpoints
+- FaunaDB collections and indexes
+- CRUD operations for all features
+- Data validation and sanitization
+- Error handling
+
+3. Data Structure (FaunaDB):
+- Users collection
+- Tasks collection
+- Notes collection
+- Events collection
+- Projects collection
+- Relationships between collections
+
+4. Performance:
+- Lazy loading for components
+- Efficient data fetching
+- Local storage for preferences
+- Service worker for offline capability
+- Asset optimization
+
+5. Security:
+- Authentication middleware
+- Data encryption
+- Input validation
+- XSS protection
+- CSRF protection
+
+Development Phases:
+
+Phase 1 - Foundation:
+- Project setup and configuration
+- Authentication system
+- Basic dashboard layout
+- Navigation structure
+
+Phase 2 - Core Features:
+- Individual hub implementations
+- Task management system
+- Calendar integration
+- Notes functionality
+
+Phase 3 - Enhancement:
+- Search functionality
+- Filtering and sorting
+- Data visualization
+- Performance optimization
+
+Phase 4 - Polish:
+- UI/UX refinement
+- Animation and transitions
+- Error handling
+- Loading states
+- Documentation
+
+Please generate the application with detailed comments and documentation for each component and function. Include README.md with setup instructions and deployment guidelines.

@@ -1,0 +1,20 @@
+Brand Identity Notes:
+
+Name: Leyef Hub
+Pronunciation: "LAY-ef hub"
+Tagline options:
+- "Your life, your way"
+- "Life management, simplified"
+- "Where life comes together"
+
+Suggested Color Palette:
+- Primary: #3B82F6 (Modern blue)
+- Secondary: #10B981 (Fresh mint)
+- Accent: #8B5CF6 (Soft purple)
+- Neutral: #1F2937 (Deep gray)
+- Background: #F9FAFB (Light gray)
+
+Typography suggestion:
+- Headings: Inter
+- Body: Inter or DM Sans
+- Logo: Outfit or Plus Jakarta Sans

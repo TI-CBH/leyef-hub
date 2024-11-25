@@ -1,0 +1,17 @@
+# Create Nuxt 3 project
+npx nuxi init leyef-hub
+
+# Navigate to project directory
+cd leyef-hub
+
+# Install core dependencies
+npm install @nuxtjs/tailwindcss @pinia/nuxt @vueuse/nuxt @nuxtjs/color-mode
+npm install faunadb netlify-identity-widget @headlessui/vue @heroicons/vue
+
+# Install development dependencies
+npm install -D postcss@latest autoprefixer@latest
+npm install -D @types/node @types/netlify-identity-widget
+npm install -D typescript @typescript-eslint/parser @typescript-eslint/eslint-plugin
+
+# Create tsconfig.json if it doesn't exist
+touch tsconfig.json

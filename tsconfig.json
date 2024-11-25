@@ -1,0 +1,13 @@
+{
+  "extends": "./.nuxt/tsconfig.json",
+  "compilerOptions": {
+    "strict": true,
+    "skipLibCheck": true,
+    "types": [
+      "@pinia/nuxt",
+      "@vueuse/nuxt",
+      "@nuxtjs/color-mode",
+      "netlify-identity-widget"
+    ]
+  }
+} 

@@ -131,14 +131,14 @@ declare module 'nuxt/schema' {
       cdnURL: string,
    },
 
+   faunaKey: string,
+
    nitro: {
       envPrefix: string,
    },
   }
   interface PublicRuntimeConfig {
    siteUrl: string,
-
-   faunaKey: string,
   }
 }
 declare module 'vue' {

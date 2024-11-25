@@ -1,1 +1,0 @@
-import{s as i,u,v as e}from"./DNWstqCp.js";const s=i(t=>{const a=u();if(!a.isAuthenticated&&t.path!=="/login")return e("/login");if(a.isAuthenticated&&t.path==="/login")return e("/dashboard")});export{s as default};

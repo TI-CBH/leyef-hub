@@ -3,6 +3,26 @@ import type { Serialize, Simplify } from "nitropack/types";
 declare module "nitropack/types" {
   type Awaited<T> = T extends PromiseLike<infer U> ? Awaited<U> : T
   interface InternalApi {
+    '/api/notes/:id': {
+      'delete': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/notes/[id].delete').default>>>>
+      'patch': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/notes/[id].patch').default>>>>
+    }
+    '/api/notes/create': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/notes/create.post').default>>>>
+    }
+    '/api/notes': {
+      'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/notes/index').default>>>>
+    }
+    '/api/tasks/:id': {
+      'delete': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/tasks/[id].delete').default>>>>
+      'patch': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/tasks/[id].patch').default>>>>
+    }
+    '/api/tasks/create': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/tasks/create.post').default>>>>
+    }
+    '/api/tasks': {
+      'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/tasks/index').default>>>>
+    }
     '/__nuxt_error': {
       'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../node_modules/nuxt/dist/core/runtime/nitro/renderer').default>>>>
     }

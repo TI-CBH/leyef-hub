@@ -253,6 +253,7 @@ declare global {
   const useMutationObserver: typeof import('../../node_modules/@vueuse/core')['useMutationObserver']
   const useNavigatorLanguage: typeof import('../../node_modules/@vueuse/core')['useNavigatorLanguage']
   const useNetwork: typeof import('../../node_modules/@vueuse/core')['useNetwork']
+  const useNotes: typeof import('../../composables/useNotes')['useNotes']
   const useNow: typeof import('../../node_modules/@vueuse/core')['useNow']
   const useNuxtApp: typeof import('../../node_modules/nuxt/dist/app/nuxt')['useNuxtApp']
   const useNuxtData: typeof import('../../node_modules/nuxt/dist/app/composables/asyncData')['useNuxtData']
@@ -335,6 +336,7 @@ declare global {
   const useStyleTag: typeof import('../../node_modules/@vueuse/core')['useStyleTag']
   const useSupported: typeof import('../../node_modules/@vueuse/core')['useSupported']
   const useSwipe: typeof import('../../node_modules/@vueuse/core')['useSwipe']
+  const useTasks: typeof import('../../composables/useTasks')['useTasks']
   const useTemplateRef: typeof import('../../node_modules/vue')['useTemplateRef']
   const useTemplateRefsList: typeof import('../../node_modules/@vueuse/core')['useTemplateRefsList']
   const useTextDirection: typeof import('../../node_modules/@vueuse/core')['useTextDirection']
@@ -652,6 +654,7 @@ declare module 'vue' {
     readonly useMutationObserver: UnwrapRef<typeof import('../../node_modules/@vueuse/core')['useMutationObserver']>
     readonly useNavigatorLanguage: UnwrapRef<typeof import('../../node_modules/@vueuse/core')['useNavigatorLanguage']>
     readonly useNetwork: UnwrapRef<typeof import('../../node_modules/@vueuse/core')['useNetwork']>
+    readonly useNotes: UnwrapRef<typeof import('../../composables/useNotes')['useNotes']>
     readonly useNow: UnwrapRef<typeof import('../../node_modules/@vueuse/core')['useNow']>
     readonly useNuxtApp: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/nuxt')['useNuxtApp']>
     readonly useNuxtData: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/asyncData')['useNuxtData']>
@@ -734,6 +737,7 @@ declare module 'vue' {
     readonly useStyleTag: UnwrapRef<typeof import('../../node_modules/@vueuse/core')['useStyleTag']>
     readonly useSupported: UnwrapRef<typeof import('../../node_modules/@vueuse/core')['useSupported']>
     readonly useSwipe: UnwrapRef<typeof import('../../node_modules/@vueuse/core')['useSwipe']>
+    readonly useTasks: UnwrapRef<typeof import('../../composables/useTasks')['useTasks']>
     readonly useTemplateRef: UnwrapRef<typeof import('../../node_modules/vue')['useTemplateRef']>
     readonly useTemplateRefsList: UnwrapRef<typeof import('../../node_modules/@vueuse/core')['useTemplateRefsList']>
     readonly useTextDirection: UnwrapRef<typeof import('../../node_modules/@vueuse/core')['useTextDirection']>

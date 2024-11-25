@@ -1,4 +1,4 @@
-import type { Task, Note } from '~/types'
+import type { Task, Note, Project } from '~/types'
 
 export interface ApiResponse<T> {
   data: T
@@ -19,6 +19,14 @@ export interface NotesResponse {
 
 export interface NoteResponse {
   note: Note
+}
+
+export interface ProjectsResponse {
+  projects: Project[]
+}
+
+export interface ProjectResponse {
+  project: Project
 }
 
 export interface DeleteResponse {

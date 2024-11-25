@@ -50,4 +50,16 @@ export interface Event {
   hub_id: string
   created_at: string
   updated_at: string
+}
+
+export interface Project {
+  id: string
+  title: string
+  description?: string
+  status: 'planning' | 'in-progress' | 'review' | 'completed'
+  priority: 'low' | 'medium' | 'high'
+  due_date?: string
+  created_at: string
+  updated_at: string
+  tasks?: string[]
 } 

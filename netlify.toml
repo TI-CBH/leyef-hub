@@ -1,7 +1,6 @@
 [build]
-  command = "npm run generate"
+  command = "npx nuxi build"
   publish = ".output/public"
-  functions = "netlify/functions"
 
 [[redirects]]
   from = "/*"
@@ -15,4 +14,4 @@
   command = "npm run dev"
   targetPort = 3000
   port = 8888
-  publish = ".output/public" 
+  publish = ".output/public"

@@ -9,14 +9,6 @@
           Manage your household tasks and family activities
         </p>
       </div>
-      
-      <button
-        @click="showNewTaskModal = true"
-        class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors"
-      >
-        <PlusIcon class="w-5 h-5 inline-block mr-2" />
-        New Task
-      </button>
     </header>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -32,41 +24,60 @@
         />
       </div>
 
-      <!-- Calendar Section -->
-      <div class="bg-white dark:bg-neutral-800 rounded-lg shadow p-6">
-        <h2 class="text-lg font-semibold mb-4">
-          Family Calendar
-        </h2>
-        <!-- TODO: Implement calendar component -->
+      <!-- Notes Section -->
+      <div class="space-y-6">
+        <NoteList
+          title="Family Notes"
+          :notes="homeNotes"
+          :loading="notesStore.isLoading"
+          @add="showNewNoteModal = true"
+          @edit="editNote"
+          @delete="deleteNote"
+        />
       </div>
     </div>
 
-    <!-- New Task Modal -->
+    <!-- Task Modal -->
     <TaskFormModal
       v-if="showNewTaskModal"
       @close="showNewTaskModal = false"
       @submit="createTask"
     />
+
+    <!-- Note Modal -->
+    <NoteFormModal
+      v-if="showNoteModal"
+      :note="selectedNote"
+      @close="closeNoteModal"
+      @submit="submitNote"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-import { PlusIcon } from '@heroicons/vue/outline'
 import { useTasks } from '~/composables/useTasks'
-import type { Task } from '~/types'
+import { useNotes } from '~/composables/useNotes'
+import type { Task, Note } from '~/types'
 
-// Store
+// Stores
 const tasksStore = useTasks()
+const notesStore = useNotes()
 
 // State
 const showNewTaskModal = ref(false)
+const showNoteModal = ref(false)
+const selectedNote = ref<Note | undefined>(undefined)
 
 // Computed
 const homeTasks = computed(() => {
   return tasksStore.getTasksByHub('home')
 })
 
-// Methods
+const homeNotes = computed(() => {
+  return notesStore.getNotesByHub('home')
+})
+
+// Task Methods
 const createTask = async (taskData: Omit<Task, 'id' | 'created_at' | 'updated_at'>) => {
   await tasksStore.addTask({
     ...taskData,
@@ -87,8 +98,38 @@ const deleteTask = async (task: Task) => {
   }
 }
 
-// Fetch tasks on mount
+// Note Methods
+const editNote = (note: Note) => {
+  selectedNote.value = note
+  showNoteModal.value = true
+}
+
+const closeNoteModal = () => {
+  selectedNote.value = undefined
+  showNoteModal.value = false
+}
+
+const submitNote = async (noteData: Omit<Note, 'id' | 'created_at' | 'updated_at' | 'hub_id'>) => {
+  if (selectedNote.value) {
+    await notesStore.updateNote(selectedNote.value.id, noteData)
+  } else {
+    await notesStore.addNote({
+      ...noteData,
+      hub_id: 'home'
+    })
+  }
+  closeNoteModal()
+}
+
+const deleteNote = async (note: Note) => {
+  if (confirm('Are you sure you want to delete this note?')) {
+    await notesStore.deleteNote(note.id)
+  }
+}
+
+// Fetch data on mount
 onMounted(() => {
   tasksStore.fetchTasks()
+  notesStore.fetchNotes()
 })
 </script> 

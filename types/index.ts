@@ -38,6 +38,7 @@ export interface Note {
   hub_id: string
   created_at: string
   updated_at: string
+  tags?: string[]
 }
 
 export interface Event {

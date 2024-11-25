@@ -62,4 +62,16 @@ export interface Project {
   created_at: string
   updated_at: string
   tasks?: string[]
+}
+
+export interface Meeting {
+  id: string
+  title: string
+  description?: string
+  start_date: string
+  end_date: string
+  attendees?: string[]
+  location?: string
+  created_at: string
+  updated_at: string
 } 

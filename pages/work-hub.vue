@@ -35,6 +35,12 @@
       @edit="editProject"
     />
 
+    <!-- Task Priority Matrix -->
+    <TaskPriorityMatrix
+      :tasks="workTasks"
+      @toggle="toggleTask"
+    />
+
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
       <!-- Tasks Section -->
       <div class="space-y-6">
@@ -57,6 +63,17 @@
           @add="showNewNoteModal = true"
           @edit="editNote"
           @delete="deleteNote"
+        />
+      </div>
+
+      <!-- Meeting Scheduler -->
+      <div class="lg:col-span-2">
+        <MeetingScheduler
+          :meetings="meetings"
+          :loading="meetingsStore.isLoading"
+          @add="showMeetingModal = true"
+          @edit="editMeeting"
+          @delete="deleteMeeting"
         />
       </div>
     </div>
@@ -83,6 +100,14 @@
       @close="closeProjectModal"
       @submit="submitProject"
     />
+
+    <!-- Meeting Modal -->
+    <MeetingFormModal
+      v-if="showMeetingModal"
+      :meeting="selectedMeeting"
+      @close="closeMeetingModal"
+      @submit="submitMeeting"
+    />
   </div>
 </template>
 
@@ -91,19 +116,23 @@ import { PlusIcon, FolderPlusIcon } from '@heroicons/vue/outline'
 import { useTasks } from '~/composables/useTasks'
 import { useNotes } from '~/composables/useNotes'
 import { useProjects } from '~/composables/useProjects'
-import type { Task, Note, Project } from '~/types'
+import { useMeetings } from '~/composables/useMeetings'
+import type { Task, Note, Project, Meeting } from '~/types'
 
 // Stores
 const tasksStore = useTasks()
 const notesStore = useNotes()
 const projectsStore = useProjects()
+const meetingsStore = useMeetings()
 
 // State
 const showNewTaskModal = ref(false)
 const showNoteModal = ref(false)
 const showProjectModal = ref(false)
+const showMeetingModal = ref(false)
 const selectedNote = ref<Note | undefined>(undefined)
 const selectedProject = ref<Project | undefined>(undefined)
+const selectedMeeting = ref<Meeting | undefined>(undefined)
 
 // Computed
 const workTasks = computed(() => {
@@ -116,6 +145,10 @@ const workNotes = computed(() => {
 
 const projects = computed(() => {
   return projectsStore.projects
+})
+
+const meetings = computed(() => {
+  return meetingsStore.getUpcomingMeetings
 })
 
 // Task Methods
@@ -188,10 +221,37 @@ const submitProject = async (projectData: Omit<Project, 'id' | 'created_at' | 'u
   closeProjectModal()
 }
 
+// Meeting Methods
+const editMeeting = (meeting: Meeting) => {
+  selectedMeeting.value = meeting
+  showMeetingModal.value = true
+}
+
+const closeMeetingModal = () => {
+  selectedMeeting.value = undefined
+  showMeetingModal.value = false
+}
+
+const submitMeeting = async (meetingData: Omit<Meeting, 'id' | 'created_at' | 'updated_at'>) => {
+  if (selectedMeeting.value) {
+    await meetingsStore.updateMeeting(selectedMeeting.value.id, meetingData)
+  } else {
+    await meetingsStore.addMeeting(meetingData)
+  }
+  closeMeetingModal()
+}
+
+const deleteMeeting = async (meeting: Meeting) => {
+  if (confirm('Are you sure you want to delete this meeting?')) {
+    await meetingsStore.deleteMeeting(meeting.id)
+  }
+}
+
 // Fetch data on mount
 onMounted(() => {
   tasksStore.fetchTasks()
   notesStore.fetchNotes()
   projectsStore.fetchProjects()
+  meetingsStore.fetchMeetings()
 })
 </script> 

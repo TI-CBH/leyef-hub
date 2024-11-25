@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 import * as netlifyIdentity from 'netlify-identity-widget'
-import { useRuntimeConfig } from '#app'
 
 interface AuthState {
   user: netlifyIdentity.User | null

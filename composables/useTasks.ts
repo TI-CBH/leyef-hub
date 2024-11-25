@@ -1,15 +1,18 @@
 import { defineStore } from 'pinia'
 import type { Task } from '~/types'
+import { taskQueries } from '~/utils/fauna'
 
 interface TasksState {
   tasks: Task[]
   isLoading: boolean
+  error: string | null
 }
 
 export const useTasks = defineStore('tasks', {
   state: (): TasksState => ({
     tasks: [],
-    isLoading: false
+    isLoading: false,
+    error: null
   }),
 
   getters: {
@@ -29,12 +32,13 @@ export const useTasks = defineStore('tasks', {
   actions: {
     async fetchTasks() {
       this.isLoading = true
+      this.error = null
       try {
-        // TODO: Implement FaunaDB query
-        // const result = await queryTasks()
-        // this.tasks = result.data
+        const tasks = await taskQueries.getAllTasks()
+        this.tasks = tasks
       } catch (error) {
         console.error('Error fetching tasks:', error)
+        this.error = 'Failed to fetch tasks'
       } finally {
         this.isLoading = false
       }
@@ -42,12 +46,13 @@ export const useTasks = defineStore('tasks', {
 
     async addTask(task: Omit<Task, 'id' | 'created_at' | 'updated_at'>) {
       this.isLoading = true
+      this.error = null
       try {
-        // TODO: Implement FaunaDB mutation
-        // const result = await createTask(task)
-        // this.tasks.push(result.data)
+        const newTask = await taskQueries.createTask(task)
+        this.tasks.push(newTask)
       } catch (error) {
         console.error('Error adding task:', error)
+        this.error = 'Failed to add task'
       } finally {
         this.isLoading = false
       }
@@ -55,15 +60,16 @@ export const useTasks = defineStore('tasks', {
 
     async updateTask(id: string, updates: Partial<Task>) {
       this.isLoading = true
+      this.error = null
       try {
-        // TODO: Implement FaunaDB mutation
-        // const result = await updateTask(id, updates)
+        const updatedTask = await taskQueries.updateTask(id, updates)
         const index = this.tasks.findIndex((task: Task) => task.id === id)
         if (index !== -1) {
-          this.tasks[index] = { ...this.tasks[index], ...updates }
+          this.tasks[index] = updatedTask
         }
       } catch (error) {
         console.error('Error updating task:', error)
+        this.error = 'Failed to update task'
       } finally {
         this.isLoading = false
       }
@@ -71,12 +77,13 @@ export const useTasks = defineStore('tasks', {
 
     async deleteTask(id: string) {
       this.isLoading = true
+      this.error = null
       try {
-        // TODO: Implement FaunaDB mutation
-        // await deleteTask(id)
+        await taskQueries.deleteTask(id)
         this.tasks = this.tasks.filter((task: Task) => task.id !== id)
       } catch (error) {
         console.error('Error deleting task:', error)
+        this.error = 'Failed to delete task'
       } finally {
         this.isLoading = false
       }

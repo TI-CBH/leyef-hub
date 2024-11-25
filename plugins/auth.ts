@@ -1,4 +1,4 @@
-import { defineNuxtPlugin } from '#imports'
+import { defineNuxtPlugin } from '#app'
 import { useAuth } from '~/composables/useAuth'
 
 export default defineNuxtPlugin(() => {

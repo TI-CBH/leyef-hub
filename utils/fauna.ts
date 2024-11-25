@@ -1,5 +1,6 @@
 import { Client, query as q } from 'faunadb'
 import type { Task } from '~/types'
+import type { FaunaResponse, FaunaPageResponse } from '~/types/fauna'
 
 // Initialize FaunaDB client
 const createFaunaClient = () => {
@@ -13,13 +14,13 @@ const createFaunaClient = () => {
 export const taskQueries = {
   async getAllTasks(): Promise<Task[]> {
     const client = createFaunaClient()
-    const result = await client.query(
+    const result = await client.query<FaunaPageResponse<Task>>(
       q.Map(
         q.Paginate(q.Documents(q.Collection('tasks'))),
         q.Lambda('ref', q.Get(q.Var('ref')))
       )
     )
-    return result.data.map((doc: any) => ({
+    return result.data.map((doc) => ({
       id: doc.ref.id,
       ...doc.data
     }))
@@ -27,7 +28,7 @@ export const taskQueries = {
 
   async createTask(task: Omit<Task, 'id' | 'created_at' | 'updated_at'>): Promise<Task> {
     const client = createFaunaClient()
-    const result = await client.query(
+    const result = await client.query<FaunaResponse<Task>>(
       q.Create(q.Collection('tasks'), {
         data: {
           ...task,
@@ -44,7 +45,7 @@ export const taskQueries = {
 
   async updateTask(id: string, updates: Partial<Task>): Promise<Task> {
     const client = createFaunaClient()
-    const result = await client.query(
+    const result = await client.query<FaunaResponse<Task>>(
       q.Update(q.Ref(q.Collection('tasks'), id), {
         data: {
           ...updates,

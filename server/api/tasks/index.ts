@@ -5,8 +5,16 @@ import type { TasksResponse } from '~/types/api'
 
 export default defineEventHandler(async (event): Promise<TasksResponse> => {
   const config = useRuntimeConfig()
+  const faunaKey = config.faunaKey as string
+  if (!faunaKey) {
+    throw createError({
+      statusCode: 500,
+      message: 'Fauna key is not configured'
+    })
+  }
+
   const client = new Client({
-    secret: config.faunaKey as string
+    secret: faunaKey
   })
 
   try {
@@ -18,10 +26,14 @@ export default defineEventHandler(async (event): Promise<TasksResponse> => {
     )
 
     return {
-      tasks: result.data.map((doc) => ({
-        id: doc.ref.id,
-        ...doc.data
-      }))
+      tasks: result.data.map((doc) => {
+        const { data, ref } = doc
+        const { id: _, ...taskData } = data
+        return {
+          id: ref.id,
+          ...taskData
+        }
+      })
     }
   } catch (error) {
     throw createError({

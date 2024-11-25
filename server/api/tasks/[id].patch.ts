@@ -5,7 +5,8 @@ import type { TaskResponse } from '~/types/api'
 
 export default defineEventHandler(async (event): Promise<TaskResponse> => {
   const config = useRuntimeConfig()
-  if (!config.faunaKey) {
+  const faunaKey = config.faunaKey as string
+  if (!faunaKey) {
     throw createError({
       statusCode: 500,
       message: 'Fauna key is not configured'
@@ -13,7 +14,7 @@ export default defineEventHandler(async (event): Promise<TaskResponse> => {
   }
 
   const client = new Client({
-    secret: config.faunaKey
+    secret: faunaKey
   })
 
   const params = event.context.params

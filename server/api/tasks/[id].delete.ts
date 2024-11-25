@@ -3,7 +3,8 @@ import type { DeleteResponse } from '~/types/api'
 
 export default defineEventHandler(async (event): Promise<DeleteResponse> => {
   const config = useRuntimeConfig()
-  if (!config.faunaKey) {
+  const faunaKey = config.faunaKey as string
+  if (!faunaKey) {
     throw createError({
       statusCode: 500,
       message: 'Fauna key is not configured'
@@ -11,7 +12,7 @@ export default defineEventHandler(async (event): Promise<DeleteResponse> => {
   }
 
   const client = new Client({
-    secret: config.faunaKey
+    secret: faunaKey
   })
 
   const params = event.context.params

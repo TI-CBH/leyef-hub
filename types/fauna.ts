@@ -13,6 +13,6 @@ export interface FaunaResponse<T> {
 
 export interface FaunaPageResponse<T> {
   data: FaunaResponse<T>[]
-  after?: values.Page
-  before?: values.Page
+  after?: unknown
+  before?: unknown
 } 

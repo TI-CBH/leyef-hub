@@ -50,7 +50,10 @@ export default defineNuxtConfig({
       }
     },
   
-    // Add Nitro config for Netlify
+    // SSR Configuration
+    ssr: true,
+  
+    // Nitro Configuration
     nitro: {
       preset: 'netlify'
     }

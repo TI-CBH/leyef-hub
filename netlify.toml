@@ -1,29 +1,16 @@
 [build]
-  command = "nuxt build"
+  command = "npm run generate"
   publish = ".output/public"
-  edge_functions = "edge-functions"
-
-[[redirects]]
-  from = "/_nuxt/*"
-  to = "/_nuxt/:splat"
-  status = 200
-
-[[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/server/api/:splat"
-  status = 200
 
 [[redirects]]
   from = "/*"
-  to = "/.netlify/functions/server"
+  to = "/index.html"
   status = 200
-  force = true
 
 [build.environment]
   NODE_VERSION = "18"
   NITRO_PRESET = "netlify"
 
-[dev]
-  command = "npm run dev"
-  targetPort = 3000
-  port = 8888
+[functions]
+  directory = ".output/server"
+  node_bundler = "esbuild"

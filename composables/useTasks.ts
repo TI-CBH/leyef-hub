@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 import type { Task } from '~/types'
-import { taskQueries } from '~/utils/fauna'
 
 interface TasksState {
   tasks: Task[]
@@ -34,7 +33,7 @@ export const useTasks = defineStore('tasks', {
       this.isLoading = true
       this.error = null
       try {
-        const tasks = await taskQueries.getAllTasks()
+        const { tasks } = await $fetch('/api/tasks')
         this.tasks = tasks
       } catch (error) {
         console.error('Error fetching tasks:', error)
@@ -48,7 +47,10 @@ export const useTasks = defineStore('tasks', {
       this.isLoading = true
       this.error = null
       try {
-        const newTask = await taskQueries.createTask(task)
+        const { task: newTask } = await $fetch('/api/tasks/create', {
+          method: 'POST',
+          body: task
+        })
         this.tasks.push(newTask)
       } catch (error) {
         console.error('Error adding task:', error)
@@ -62,7 +64,10 @@ export const useTasks = defineStore('tasks', {
       this.isLoading = true
       this.error = null
       try {
-        const updatedTask = await taskQueries.updateTask(id, updates)
+        const { task: updatedTask } = await $fetch(`/api/tasks/${id}`, {
+          method: 'PATCH',
+          body: updates
+        })
         const index = this.tasks.findIndex((task: Task) => task.id === id)
         if (index !== -1) {
           this.tasks[index] = updatedTask
@@ -79,7 +84,9 @@ export const useTasks = defineStore('tasks', {
       this.isLoading = true
       this.error = null
       try {
-        await taskQueries.deleteTask(id)
+        await $fetch(`/api/tasks/${id}`, {
+          method: 'DELETE'
+        })
         this.tasks = this.tasks.filter((task: Task) => task.id !== id)
       } catch (error) {
         console.error('Error deleting task:', error)

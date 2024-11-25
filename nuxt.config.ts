@@ -44,9 +44,9 @@ export default defineNuxtConfig({
 
   // Runtime Config
   runtimeConfig: {
+    faunaKey: process.env.FAUNA_KEY,
     public: {
-      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || '',
-      faunaKey: process.env.NUXT_PUBLIC_FAUNA_KEY || ''
+      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || ''
     }
   }
 }) 

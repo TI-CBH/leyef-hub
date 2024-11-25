@@ -8,5 +8,8 @@
     "@vueuse/nuxt": "^11.3.0",
     "faunadb": "^4.8.1",
     "netlify-identity-widget": "^1.9.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2"
   }
 }

@@ -19,7 +19,7 @@
           New Task
         </button>
         <button
-          @click="showNewProjectModal = true"
+          @click="showProjectModal = true"
           class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors"
         >
           <FolderPlusIcon class="w-5 h-5 inline-block mr-2" />
@@ -31,7 +31,7 @@
     <!-- Project Board -->
     <ProjectBoard
       :projects="projects"
-      @add="showNewProjectModal = true"
+      @add="showProjectModal = true"
       @edit="editProject"
     />
 

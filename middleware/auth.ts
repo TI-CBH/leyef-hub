@@ -1,11 +1,17 @@
-export default defineNuxtRouteMiddleware((to, from) => {
-  const auth = useAuth()
-  
-  if (!auth.isAuthenticated && to.path !== '/login') {
-    return navigateTo('/login')
+import { defineNuxtRouteMiddleware, useRouter, navigateTo } from '#app'
+import type { RouteLocationNormalized } from 'vue-router'
+import { useAuth } from '~/composables/useAuth'
+
+export default defineNuxtRouteMiddleware(
+  (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
+    const auth = useAuth()
+    
+    if (!auth.isAuthenticated && to.path !== '/login') {
+      return navigateTo('/login')
+    }
+    
+    if (auth.isAuthenticated && to.path === '/login') {
+      return navigateTo('/dashboard')
+    }
   }
-  
-  if (auth.isAuthenticated && to.path === '/login') {
-    return navigateTo('/dashboard')
-  }
-}) 
+) 

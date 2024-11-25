@@ -3,11 +3,30 @@
   "compilerOptions": {
     "strict": true,
     "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./*"],
+      "@/*": ["./*"]
+    },
     "types": [
+      "@types/node",
       "@pinia/nuxt",
-      "@vueuse/nuxt",
-      "@nuxtjs/color-mode",
-      "netlify-identity-widget"
+      "@vueuse/core",
+      "vue-router",
+      "pinia"
+    ],
+    "typeRoots": [
+      "./types",
+      "./node_modules/@types"
     ]
-  }
+  },
+  "include": [
+    "./**/*.ts",
+    "./**/*.d.ts",
+    "./**/*.tsx",
+    "./**/*.vue"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 } 

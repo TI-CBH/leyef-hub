@@ -1,20 +1,29 @@
 import { defineStore } from 'pinia'
-import netlifyIdentity from 'netlify-identity-widget'
+import * as netlifyIdentity from 'netlify-identity-widget'
+import type { User } from '~/types'
+
+interface AuthState {
+  user: netlifyIdentity.User | null
+  isAuthenticated: boolean
+  isLoading: boolean
+}
 
 export const useAuth = defineStore('auth', {
-  state: () => ({
-    user: null as netlifyIdentity.User | null,
+  state: (): AuthState => ({
+    user: null,
     isAuthenticated: false,
     isLoading: true
   }),
 
   actions: {
     init() {
+      const siteUrl = useRuntimeConfig().public.siteUrl
+      
       netlifyIdentity.init({
-        APIUrl: `${process.env.NUXT_PUBLIC_SITE_URL}/.netlify/identity`
+        APIUrl: `${siteUrl}/.netlify/identity`
       })
 
-      netlifyIdentity.on('login', (user) => {
+      netlifyIdentity.on('login', (user: netlifyIdentity.User) => {
         this.user = user
         this.isAuthenticated = true
         netlifyIdentity.close()
@@ -25,7 +34,6 @@ export const useAuth = defineStore('auth', {
         this.isAuthenticated = false
       })
 
-      // Check initial state
       const currentUser = netlifyIdentity.currentUser()
       if (currentUser) {
         this.user = currentUser

@@ -1,13 +1,9 @@
-// Import required types
-import { defineNuxtConfig } from 'nuxt/config'
-import type { NuxtConfig } from '@nuxt/types'
-
-// Define config with proper typing
+// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  // SSG mode
-  ssr: true,
-  nitro: {
-    preset: 'netlify'
+  // TypeScript
+  typescript: {
+    strict: true,
+    typeCheck: true
   },
 
   // Modules
@@ -55,8 +51,8 @@ export default defineNuxtConfig({
   // Runtime Config
   runtimeConfig: {
     public: {
-      siteUrl: process.env.NUXT_PUBLIC_SITE_URL,
-      faunaKey: process.env.NUXT_PUBLIC_FAUNA_KEY
+      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || '',
+      faunaKey: process.env.NUXT_PUBLIC_FAUNA_KEY || ''
     }
   },
 
@@ -72,10 +68,5 @@ export default defineNuxtConfig({
     workbox: {
       enabled: true
     }
-  },
-
-  // Add devDependencies for TypeScript support
-  devDependencies: {
-    '@types/node': '^18.0.0',
   }
-}) as NuxtConfig 
+}) 

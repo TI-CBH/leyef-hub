@@ -1,18 +1,18 @@
-import type { Collection } from 'faunadb'
+import type { Collection, values } from 'faunadb'
 
 export interface FaunaRef {
   id: string
-  collection: typeof Collection
+  collection: Collection
 }
 
 export interface FaunaResponse<T> {
   ref: FaunaRef
   ts: number
-  data: T
+  data: T & { id?: string }
 }
 
 export interface FaunaPageResponse<T> {
   data: FaunaResponse<T>[]
-  after?: FaunaRef
-  before?: FaunaRef
+  after?: values.Page
+  before?: values.Page
 } 

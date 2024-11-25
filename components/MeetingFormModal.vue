@@ -82,7 +82,7 @@
                 @click="removeAttendee(attendee)"
                 class="hover:text-primary-dark"
               >
-                <XIcon class="w-4 h-4" />
+                <XMarkIcon class="w-4 h-4" />
               </button>
             </span>
           </div>
@@ -125,7 +125,7 @@
 </template>
 
 <script setup lang="ts">
-import { XIcon } from '@heroicons/vue/24/outline'
+import { XMarkIcon } from '@heroicons/vue/24/outline'
 import type { Meeting } from '~/types'
 
 const props = defineProps<{

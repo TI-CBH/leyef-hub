@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import * as netlifyIdentity from 'netlify-identity-widget'
-import type { User } from '~/types'
+import { useRuntimeConfig } from '#app'
 
 interface AuthState {
   user: netlifyIdentity.User | null
@@ -17,16 +17,19 @@ export const useAuth = defineStore('auth', {
 
   actions: {
     init() {
-      const siteUrl = useRuntimeConfig().public.siteUrl
+      const config = useRuntimeConfig()
+      const siteUrl = config.public.siteUrl
       
       netlifyIdentity.init({
         APIUrl: `${siteUrl}/.netlify/identity`
       })
 
-      netlifyIdentity.on('login', (user: netlifyIdentity.User) => {
-        this.user = user
-        this.isAuthenticated = true
-        netlifyIdentity.close()
+      netlifyIdentity.on('login', (user) => {
+        if (user) {
+          this.user = user
+          this.isAuthenticated = true
+          netlifyIdentity.close()
+        }
       })
 
       netlifyIdentity.on('logout', () => {

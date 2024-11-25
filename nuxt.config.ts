@@ -3,7 +3,8 @@ export default defineNuxtConfig({
   // TypeScript
   typescript: {
     strict: true,
-    typeCheck: true
+    typeCheck: true,
+    shim: false
   },
 
   // Modules

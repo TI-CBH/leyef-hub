@@ -9,15 +9,11 @@
       "@/*": ["./*"]
     },
     "types": [
-      "@types/node",
+      "@nuxt/types",
       "@pinia/nuxt",
-      "@vueuse/core",
-      "vue-router",
-      "pinia"
-    ],
-    "typeRoots": [
-      "./types",
-      "./node_modules/@types"
+      "@vueuse/nuxt",
+      "@types/node",
+      "netlify-identity-widget"
     ]
   },
   "include": [

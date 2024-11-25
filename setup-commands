@@ -1,0 +1,26 @@
+# Clean up existing installation
+rm -rf node_modules package-lock.json
+
+# Create fresh Nuxt 3 project
+npx nuxi@latest init leyef-hub
+
+# Navigate to project directory
+cd leyef-hub
+
+# Install core dependencies (one at a time to ensure compatibility)
+npm install @pinia/nuxt
+npm install @nuxtjs/tailwindcss
+npm install @vueuse/nuxt
+npm install @nuxtjs/color-mode
+npm install faunadb
+npm install netlify-identity-widget
+npm install @headlessui/vue@latest
+npm install @heroicons/vue@latest
+
+# Install TypeScript and types
+npm install -D typescript
+npm install -D @types/node@latest
+npm install -D @types/netlify-identity-widget
+
+# Run Nuxt prepare to generate proper TypeScript files
+npx nuxi prepare

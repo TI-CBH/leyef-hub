@@ -1,12 +1,11 @@
-import { defineNuxtPlugin } from '#app'
-import type { NuxtApp } from '@nuxt/types'
+import { defineNuxtPlugin } from '#imports'
 import { useAuth } from '~/composables/useAuth'
 
-export default defineNuxtPlugin((nuxtApp: NuxtApp) => {
+export default defineNuxtPlugin(() => {
   const auth = useAuth()
   
   // Initialize auth on client-side only
-  if (typeof window !== 'undefined') {
+  if (process.client) {
     auth.init()
   }
 }) 

@@ -7,22 +7,6 @@
     "paths": {
       "~/*": ["./*"],
       "@/*": ["./*"]
-    },
-    "types": [
-      "@nuxt/types",
-      "@pinia/nuxt",
-      "@vueuse/nuxt",
-      "@types/node",
-      "netlify-identity-widget"
-    ]
-  },
-  "include": [
-    "./**/*.ts",
-    "./**/*.d.ts",
-    "./**/*.tsx",
-    "./**/*.vue"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+    }
+  }
 } 

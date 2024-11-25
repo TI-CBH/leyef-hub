@@ -1,12 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  // TypeScript
-  typescript: {
-    strict: true,
-    typeCheck: true,
-    shim: false
-  },
-
   // Modules
   modules: [
     '@nuxtjs/tailwindcss',
@@ -54,20 +47,6 @@ export default defineNuxtConfig({
     public: {
       siteUrl: process.env.NUXT_PUBLIC_SITE_URL || '',
       faunaKey: process.env.NUXT_PUBLIC_FAUNA_KEY || ''
-    }
-  },
-
-  // PWA Configuration
-  pwa: {
-    manifest: {
-      name: 'Leyef Hub',
-      short_name: 'Leyef',
-      description: 'Personal life management dashboard',
-      theme_color: '#3B82F6',
-      background_color: '#F9FAFB'
-    },
-    workbox: {
-      enabled: true
     }
   }
 }) 

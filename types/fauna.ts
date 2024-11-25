@@ -2,7 +2,7 @@ import type { Collection, values } from 'faunadb'
 
 export interface FaunaRef {
   id: string
-  collection: Collection
+  collection: typeof Collection
 }
 
 export interface FaunaResponse<T> {

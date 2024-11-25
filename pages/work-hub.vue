@@ -112,7 +112,7 @@
 </template>
 
 <script setup lang="ts">
-import { PlusIcon, FolderPlusIcon } from '@heroicons/vue/outline'
+import { PlusIcon, FolderPlusIcon } from '@heroicons/vue/24/outline'
 import { useTasks } from '~/composables/useTasks'
 import { useNotes } from '~/composables/useNotes'
 import { useProjects } from '~/composables/useProjects'

@@ -125,7 +125,7 @@
 </template>
 
 <script setup lang="ts">
-import { XIcon } from '@heroicons/vue/outline'
+import { XIcon } from '@heroicons/vue/24/outline'
 import type { Meeting } from '~/types'
 
 const props = defineProps<{

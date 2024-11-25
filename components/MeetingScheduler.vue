@@ -63,7 +63,7 @@
 </template>
 
 <script setup lang="ts">
-import { PlusIcon, PencilIcon, TrashIcon, ClockIcon, UsersIcon } from '@heroicons/vue/outline'
+import { PlusIcon, PencilIcon, TrashIcon, ClockIcon, UsersIcon } from '@heroicons/vue/24/outline'
 import type { Meeting } from '~/types'
 
 const props = defineProps<{

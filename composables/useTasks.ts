@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import type { Task } from '~/types'
+import type { TasksResponse, TaskResponse, DeleteResponse } from '~/types/api'
 
 interface TasksState {
   tasks: Task[]
@@ -33,8 +34,8 @@ export const useTasks = defineStore('tasks', {
       this.isLoading = true
       this.error = null
       try {
-        const { tasks } = await $fetch('/api/tasks')
-        this.tasks = tasks
+        const response = await $fetch<TasksResponse>('/api/tasks')
+        this.tasks = response.tasks
       } catch (error) {
         console.error('Error fetching tasks:', error)
         this.error = 'Failed to fetch tasks'
@@ -47,11 +48,11 @@ export const useTasks = defineStore('tasks', {
       this.isLoading = true
       this.error = null
       try {
-        const { task: newTask } = await $fetch('/api/tasks/create', {
+        const response = await $fetch<TaskResponse>('/api/tasks/create', {
           method: 'POST',
           body: task
         })
-        this.tasks.push(newTask)
+        this.tasks.push(response.task)
       } catch (error) {
         console.error('Error adding task:', error)
         this.error = 'Failed to add task'
@@ -64,13 +65,13 @@ export const useTasks = defineStore('tasks', {
       this.isLoading = true
       this.error = null
       try {
-        const { task: updatedTask } = await $fetch(`/api/tasks/${id}`, {
+        const response = await $fetch<TaskResponse>(`/api/tasks/${id}`, {
           method: 'PATCH',
           body: updates
         })
         const index = this.tasks.findIndex((task: Task) => task.id === id)
         if (index !== -1) {
-          this.tasks[index] = updatedTask
+          this.tasks[index] = response.task
         }
       } catch (error) {
         console.error('Error updating task:', error)
@@ -84,7 +85,7 @@ export const useTasks = defineStore('tasks', {
       this.isLoading = true
       this.error = null
       try {
-        await $fetch(`/api/tasks/${id}`, {
+        await $fetch<DeleteResponse>(`/api/tasks/${id}`, {
           method: 'DELETE'
         })
         this.tasks = this.tasks.filter((task: Task) => task.id !== id)

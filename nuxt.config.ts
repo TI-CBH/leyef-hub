@@ -55,6 +55,10 @@ export default defineNuxtConfig({
   
     // Nitro Configuration
     nitro: {
-      preset: 'netlify'
+      preset: 'netlify',
+      prerender: {
+        crawlLinks: true,
+        routes: ['/']
+      }
     }
   })

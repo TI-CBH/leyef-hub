@@ -1,37 +1,44 @@
 import { Client, query as q } from 'faunadb'
 
-const createCollections = async (client: Client) => {
+const setupFaunaDB = async (client: Client) => {
   try {
-    // Create Tasks collection
+    // Create Collections
+    console.log('Creating collections...')
     await client.query(
-      q.CreateCollection({ name: 'tasks' })
-    )
-    
-    // Create Notes collection
-    await client.query(
-      q.CreateCollection({ name: 'notes' })
-    )
-
-    // Create indexes
-    await client.query(
-      q.CreateIndex({
-        name: 'tasks_by_hub',
-        source: q.Collection('tasks'),
-        terms: [{ field: ['data', 'hub_id'] }]
-      })
+      q.Do(
+        q.CreateCollection({ name: 'tasks' }),
+        q.CreateCollection({ name: 'notes' }),
+        q.CreateCollection({ name: 'projects' }),
+        q.CreateCollection({ name: 'meetings' })
+      )
     )
 
+    // Create Indexes
+    console.log('Creating indexes...')
     await client.query(
-      q.CreateIndex({
-        name: 'notes_by_hub',
-        source: q.Collection('notes'),
-        terms: [{ field: ['data', 'hub_id'] }]
-      })
+      q.Do(
+        q.CreateIndex({
+          name: 'tasks_by_hub',
+          source: q.Collection('tasks'),
+          terms: [{ field: ['data', 'hub_id'] }]
+        }),
+        q.CreateIndex({
+          name: 'notes_by_hub',
+          source: q.Collection('notes'),
+          terms: [{ field: ['data', 'hub_id'] }]
+        }),
+        q.CreateIndex({
+          name: 'meetings_by_date',
+          source: q.Collection('meetings'),
+          terms: [{ field: ['data', 'start_date'] }]
+        })
+      )
     )
 
-    console.log('Collections and indexes created successfully')
+    console.log('Setup completed successfully!')
   } catch (error) {
-    console.error('Error setting up database:', error)
+    console.error('Error setting up FaunaDB:', error)
+    process.exit(1)
   }
 }
 
@@ -43,4 +50,4 @@ if (!key) {
 }
 
 const client = new Client({ secret: key })
-createCollections(client) 
+setupFaunaDB(client) 

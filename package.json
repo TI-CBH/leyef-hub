@@ -18,7 +18,8 @@
     "typescript": "^5.7.2"
   },
   "scripts": {
-    "setup-db": "npx ts-node scripts/setup-fauna.ts",
+    "setup-db": "ts-node scripts/setup-fauna.ts",
+    "check-db": "ts-node scripts/check-fauna.ts",
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",

@@ -1,16 +1,35 @@
 import { Client, query as q } from 'faunadb'
+import * as dotenv from 'dotenv'
+
+// Load environment variables
+dotenv.config()
 
 const checkCollections = async (client: Client) => {
   try {
+    console.log('Checking FaunaDB collections...')
+    
     const collections = await client.query(
       q.Map(
         q.Paginate(q.Collections()),
         q.Lambda('ref', q.Get(q.Var('ref')))
       )
     )
-    console.log('Collections:', collections)
+    
+    console.log('Found collections:', collections)
+    
+    // Check for required collections
+    const requiredCollections = ['tasks', 'notes', 'projects', 'meetings']
+    const existingCollections = collections.data.map((col: any) => col.name)
+    
+    console.log('\nRequired collections:')
+    requiredCollections.forEach(col => {
+      const exists = existingCollections.includes(col)
+      console.log(`- ${col}: ${exists ? '✅' : '❌'}`)
+    })
+
   } catch (error) {
     console.error('Error checking collections:', error)
+    process.exit(1)
   }
 }
 

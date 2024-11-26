@@ -1,14 +1,20 @@
 import { Client, query as q } from 'faunadb'
 import * as dotenv from 'dotenv'
+import type { FaunaPageResponse } from '~/types/fauna'
 
 // Load environment variables
 dotenv.config()
+
+interface Collection {
+  name: string
+  // Add other collection properties if needed
+}
 
 const checkCollections = async (client: Client) => {
   try {
     console.log('Checking FaunaDB collections...')
     
-    const collections = await client.query(
+    const collections = await client.query<FaunaPageResponse<Collection>>(
       q.Map(
         q.Paginate(q.Collections()),
         q.Lambda('ref', q.Get(q.Var('ref')))
@@ -19,7 +25,7 @@ const checkCollections = async (client: Client) => {
     
     // Check for required collections
     const requiredCollections = ['tasks', 'notes', 'projects', 'meetings']
-    const existingCollections = collections.data.map((col: any) => col.name)
+    const existingCollections = collections.data.map(doc => doc.data.name)
     
     console.log('\nRequired collections:')
     requiredCollections.forEach(col => {

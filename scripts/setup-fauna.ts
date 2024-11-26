@@ -1,4 +1,8 @@
 import { Client, query as q } from 'faunadb'
+import * as dotenv from 'dotenv'
+
+// Load environment variables
+dotenv.config()
 
 const setupFaunaDB = async (client: Client) => {
   try {
@@ -49,5 +53,10 @@ if (!key) {
   process.exit(1)
 }
 
-const client = new Client({ secret: key })
+const client = new Client({
+  secret: key,
+  domain: 'db.fauna.com',
+  scheme: 'https',
+})
+
 setupFaunaDB(client) 

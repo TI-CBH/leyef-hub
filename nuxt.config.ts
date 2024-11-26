@@ -28,6 +28,10 @@ export default defineNuxtConfig({
             href: '/favicon.ico'
           }
         ]
+      },
+      error: {
+        statusCode: 500,
+        message: 'Something went wrong'
       }
     },
   
@@ -49,6 +53,21 @@ export default defineNuxtConfig({
     // Nitro Configuration
     nitro: {
       preset: 'netlify',
+      prerender: {
+        crawlLinks: true,
+        routes: [
+          '/',
+          '/login',
+          '/dashboard',
+          '/home-hub',
+          '/work-hub',
+          '/business-hub'
+        ]
+      },
+      static: {
+        directory: '.output/public',
+        serveFiles: true
+      }
     },
   
     // Build Configuration
@@ -67,5 +86,10 @@ export default defineNuxtConfig({
       '/home-hub': { ssr: true },
       '/work-hub': { ssr: true },
       '/business-hub': { ssr: true }
+    },
+  
+    // Add this section
+    experimental: {
+      payloadExtraction: false
     }
   })

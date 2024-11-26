@@ -29,10 +29,11 @@
 </template>
 
 <script setup lang="ts">
-import pkg from '@heroicons/vue/24/outline'
-const { ClockIcon, CheckCircleIcon } = pkg
+// Import icons correctly
+import { ClockIcon, CheckCircleIcon } from '@heroicons/vue/24/outline/index.js'
 import type { Project } from '~/types'
-import { useTasks } from '~/composables/useTasks'
+// Import composable with explicit path
+import { useTasks } from '../composables/useTasks'
 
 const props = defineProps<{
   project: Project

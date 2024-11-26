@@ -59,13 +59,6 @@ export default defineNuxtConfig({
           '/work-hub',
           '/business-hub'
         ]
-      },
-      routeRules: {
-        '/_nuxt/**': {
-          headers: {
-            'Cache-Control': 'public, max-age=31536000, immutable'
-          }
-        }
       }
     },
   

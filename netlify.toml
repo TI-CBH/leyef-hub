@@ -10,21 +10,31 @@
 
 [[redirects]]
   from = "/*"
-  to = "/index.html"
+  to = "/.netlify/functions/server"
   status = 200
+  force = true
 
 [build.environment]
   NODE_VERSION = "18"
   NITRO_PRESET = "netlify"
 
+[dev]
+  framework = "#custom"
+  command = "npm run dev"
+  targetPort = 3000
+  port = 8888
+  publish = ".output/public"
+  autoLaunch = true
+
 [functions]
+  directory = ".output/server"
   node_bundler = "esbuild"
+  external_node_modules = ["@prisma/client"]
 
 [[headers]]
   for = "/_nuxt/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
-    Content-Type = "application/javascript"
 
 [[headers]]
   for = "/*.js"

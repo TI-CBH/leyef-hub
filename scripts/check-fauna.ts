@@ -20,26 +20,26 @@ const checkCollections = async (client: Client) => {
   try {
     console.log('Checking FaunaDB collections...')
     
+    // Using FQL v9 syntax
     const collections = await client.query<FaunaResponse>(
-      q.Map(
-        q.Paginate(q.Collections()),
-        q.Lambda('ref', 
-          q.Let(
-            { collection: q.Get(q.Var('ref')) },
-            {
-              name: q.Select(['name'], q.Var('collection')),
-              ref: q.Select(['ref'], q.Var('collection')),
-              ts: q.Select(['ts'], q.Var('collection'))
-            }
-          )
-        )
+      q.Let(
+        {
+          collections: q.Paginate(q.Collections())
+        },
+        {
+          data: q.Select(['data'], q.Var('collections'))
+        }
       )
     )
     
     console.log('\nFound collections:')
-    collections.data.forEach(col => {
-      console.log(`- ${col.name}`)
-    })
+    if (collections.data.length === 0) {
+      console.log('No collections found')
+    } else {
+      collections.data.forEach(col => {
+        console.log(`- ${col.name}`)
+      })
+    }
     
     // Check for required collections
     const requiredCollections = ['tasks', 'notes', 'projects', 'meetings']
@@ -52,7 +52,11 @@ const checkCollections = async (client: Client) => {
     })
 
   } catch (error) {
-    console.error('Error checking collections:', error)
+    if (error instanceof Error) {
+      console.error('Error checking collections:', error.message)
+    } else {
+      console.error('Error checking collections:', error)
+    }
     process.exit(1)
   }
 }
@@ -64,5 +68,11 @@ if (!key) {
   process.exit(1)
 }
 
-const client = new Client({ secret: key })
+const client = new Client({
+  secret: key,
+  // Add domain and scheme for newer Fauna versions
+  domain: 'db.fauna.com',
+  scheme: 'https',
+})
+
 checkCollections(client) 

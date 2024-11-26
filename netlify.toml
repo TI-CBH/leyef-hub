@@ -1,13 +1,12 @@
 [build]
-  command = "npm run build"
+  command = "NITRO_PRESET=netlify npm run build"
   publish = ".output/public"
   functions = ".output/server"
 
 [[redirects]]
   from = "/*"
-  to = "/index.html"
+  to = "/.netlify/functions/server"
   status = 200
-  force = true
 
 [build.environment]
   NODE_VERSION = "18"
@@ -15,7 +14,7 @@
 
 [functions]
   node_bundler = "esbuild"
-  included_files = ["server/chunks/**", "server/node_modules/**"]
+  external_node_modules = ["@prisma/client"]
 
 [[headers]]
   for = "/*"

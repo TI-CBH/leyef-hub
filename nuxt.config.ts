@@ -26,10 +26,6 @@ export default defineNuxtConfig({
             rel: 'icon', 
             type: 'image/x-icon', 
             href: '/favicon.ico'
-          },
-          {
-            rel: 'stylesheet',
-            href: 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap'
           }
         ]
       }
@@ -50,23 +46,9 @@ export default defineNuxtConfig({
       }
     },
   
-    // SSR Configuration
-    ssr: true,
-  
     // Nitro Configuration
     nitro: {
       preset: 'netlify',
-      prerender: {
-        crawlLinks: true,
-        routes: [
-          '/',
-          '/login',
-          '/dashboard',
-          '/home-hub',
-          '/work-hub',
-          '/business-hub'
-        ]
-      }
     },
   
     // Build Configuration
@@ -74,10 +56,16 @@ export default defineNuxtConfig({
       transpile: ['@heroicons/vue']
     },
   
-    // Vite Configuration
-    vite: {
-      optimizeDeps: {
-        include: ['@heroicons/vue/24/outline']
-      }
+    // SSR Configuration
+    ssr: true,
+  
+    // Router Configuration
+    routeRules: {
+      '/': { ssr: true },
+      '/login': { ssr: false },
+      '/dashboard': { ssr: true },
+      '/home-hub': { ssr: true },
+      '/work-hub': { ssr: true },
+      '/business-hub': { ssr: true }
     }
   })

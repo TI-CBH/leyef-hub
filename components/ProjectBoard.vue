@@ -67,7 +67,7 @@
 </template>
 
 <script setup lang="ts">
-import { PlusIcon } from '@heroicons/vue/outline'
+import { PlusIcon } from '@heroicons/vue/24/outline/index.js'
 import type { Project } from '~/types'
 
 const props = defineProps<{

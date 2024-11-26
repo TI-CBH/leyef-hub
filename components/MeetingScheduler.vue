@@ -63,8 +63,13 @@
 </template>
 
 <script setup lang="ts">
-import pkg from '@heroicons/vue/24/outline'
-const { PlusIcon, PencilIcon, TrashIcon, ClockIcon, UsersIcon } = pkg
+import { 
+  PlusIcon, 
+  PencilIcon, 
+  TrashIcon, 
+  ClockIcon, 
+  UsersIcon 
+} from '@heroicons/vue/24/outline/index.js'
 import type { Meeting } from '~/types'
 
 const props = defineProps<{

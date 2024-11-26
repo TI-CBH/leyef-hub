@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { SunIcon, MoonIcon } from '@heroicons/vue/outline'
+import { SunIcon, MoonIcon } from '@heroicons/vue/24/outline/index.js'
 const colorMode = useColorMode()
 
 const toggleColorMode = () => {

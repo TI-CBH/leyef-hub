@@ -60,7 +60,7 @@
 </template>
 
 <script setup lang="ts">
-import { PlusIcon, TrashIcon } from '@heroicons/vue/outline'
+import { PlusIcon, PencilIcon, TrashIcon } from '@heroicons/vue/24/outline/index.js'
 import type { Task } from '~/types'
 
 defineProps<{

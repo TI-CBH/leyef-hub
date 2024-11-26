@@ -59,6 +59,7 @@
 
 <script setup lang="ts">
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
+import { UserIcon, LogoutIcon } from '@heroicons/vue/24/outline/index.js'
 const auth = useAuth()
 
 const userInitials = computed(() => {

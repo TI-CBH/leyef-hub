@@ -28,10 +28,6 @@ export default defineNuxtConfig({
             href: '/favicon.ico'
           }
         ]
-      },
-      error: {
-        statusCode: 500,
-        message: 'Something went wrong'
       }
     },
   
@@ -63,10 +59,6 @@ export default defineNuxtConfig({
           '/work-hub',
           '/business-hub'
         ]
-      },
-      static: {
-        directory: '.output/public',
-        serveFiles: true
       }
     },
   
@@ -86,10 +78,5 @@ export default defineNuxtConfig({
       '/home-hub': { ssr: true },
       '/work-hub': { ssr: true },
       '/business-hub': { ssr: true }
-    },
-  
-    // Add this section
-    experimental: {
-      payloadExtraction: false
     }
   })

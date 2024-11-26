@@ -1,4 +1,5 @@
 import { Client, query as q } from 'faunadb'
+import type { RequestResult } from 'faunadb'
 import * as dotenv from 'dotenv'
 
 // Load environment variables
@@ -18,34 +19,37 @@ interface FaunaResponse {
 
 const checkCollections = async (client: Client) => {
   try {
-    console.log('Checking FaunaDB collections...')
+    console.log('Checking FaunaDB connection and collections...')
     
-    // Using FQL v9 syntax
+    // First test the connection
+    const dbInfo = await client.query(
+      q.Get(q.Database('leyef-hub'))
+    )
+    console.log('Successfully connected to database:', dbInfo)
+    
+    // Then check collections
     const collections = await client.query<FaunaResponse>(
-      q.Let(
-        {
-          collections: q.Paginate(q.Collections())
-        },
-        {
-          data: q.Select(['data'], q.Var('collections'))
-        }
+      q.Paginate(
+        q.Collections()
       )
     )
     
     console.log('\nFound collections:')
-    if (collections.data.length === 0) {
-      console.log('No collections found')
+    if (!collections.data || collections.data.length === 0) {
+      console.log('No collections found - database is empty')
     } else {
       collections.data.forEach(col => {
-        console.log(`- ${col.name}`)
+        console.log(`- ${col.name || col.toString()}`)
       })
     }
     
     // Check for required collections
     const requiredCollections = ['tasks', 'notes', 'projects', 'meetings']
-    const existingCollections = collections.data.map(col => col.name)
+    const existingCollections = collections.data.map(col => 
+      typeof col === 'string' ? col : col.name || col.toString()
+    )
     
-    console.log('\nRequired collections:')
+    console.log('\nRequired collections status:')
     requiredCollections.forEach(col => {
       const exists = existingCollections.includes(col)
       console.log(`- ${col}: ${exists ? '✅' : '❌'}`)
@@ -53,9 +57,12 @@ const checkCollections = async (client: Client) => {
 
   } catch (error) {
     if (error instanceof Error) {
-      console.error('Error checking collections:', error.message)
+      console.error('Database Error:', error.message)
+      if ('description' in error) {
+        console.error('Details:', (error as any).description)
+      }
     } else {
-      console.error('Error checking collections:', error)
+      console.error('Unknown Error:', error)
     }
     process.exit(1)
   }
@@ -72,8 +79,9 @@ const client = new Client({
   secret: key,
   domain: 'db.fauna.com',
   scheme: 'https',
+  timeout: 30000,
   headers: {
-    'X-Fauna-Source': 'leyef-hub'
+    'X-Fauna-Source': 'Leyef-Hub'
   }
 })
 

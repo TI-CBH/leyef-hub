@@ -1,52 +1,71 @@
 import { Client, query as q } from 'faunadb'
 import * as dotenv from 'dotenv'
 
-// Load environment variables
 dotenv.config()
 
 const setupFaunaDB = async (client: Client) => {
   try {
-    // Create Collections
+    // Create Collections one by one
     console.log('Creating collections...')
-    await client.query(
-      q.Do(
-        q.CreateCollection({ name: 'tasks' }),
-        q.CreateCollection({ name: 'notes' }),
-        q.CreateCollection({ name: 'projects' }),
-        q.CreateCollection({ name: 'meetings' })
-      )
-    )
+    
+    const collections = ['tasks', 'notes', 'projects', 'meetings']
+    
+    for (const name of collections) {
+      try {
+        await client.query(
+          q.CreateCollection({ name })
+        )
+        console.log(`Created collection: ${name}`)
+      } catch (error: any) {
+        if (error.description === 'instance already exists') {
+          console.log(`Collection ${name} already exists`)
+        } else {
+          throw error
+        }
+      }
+    }
 
-    // Create Indexes
-    console.log('Creating indexes...')
-    await client.query(
-      q.Do(
-        q.CreateIndex({
-          name: 'tasks_by_hub',
-          source: q.Collection('tasks'),
-          terms: [{ field: ['data', 'hub_id'] }]
-        }),
-        q.CreateIndex({
-          name: 'notes_by_hub',
-          source: q.Collection('notes'),
-          terms: [{ field: ['data', 'hub_id'] }]
-        }),
-        q.CreateIndex({
-          name: 'meetings_by_date',
-          source: q.Collection('meetings'),
-          terms: [{ field: ['data', 'start_date'] }]
-        })
-      )
-    )
+    // Create basic indexes
+    console.log('\nCreating indexes...')
+    const indexes = [
+      {
+        name: 'tasks_by_hub',
+        source: 'tasks',
+        terms: [{ field: ['data', 'hub_id'] }]
+      },
+      {
+        name: 'notes_by_hub',
+        source: 'notes',
+        terms: [{ field: ['data', 'hub_id'] }]
+      }
+    ]
 
-    console.log('Setup completed successfully!')
+    for (const index of indexes) {
+      try {
+        await client.query(
+          q.CreateIndex({
+            name: index.name,
+            source: q.Collection(index.source),
+            terms: index.terms
+          })
+        )
+        console.log(`Created index: ${index.name}`)
+      } catch (error: any) {
+        if (error.description === 'instance already exists') {
+          console.log(`Index ${index.name} already exists`)
+        } else {
+          throw error
+        }
+      }
+    }
+
+    console.log('\nSetup completed successfully!')
   } catch (error) {
     console.error('Error setting up FaunaDB:', error)
     process.exit(1)
   }
 }
 
-// Run setup if FAUNA_KEY is provided
 const key = process.env.FAUNA_KEY
 if (!key) {
   console.error('FAUNA_KEY environment variable is required')
@@ -57,9 +76,7 @@ const client = new Client({
   secret: key,
   domain: 'db.fauna.com',
   scheme: 'https',
-  headers: {
-    'X-Fauna-Version': '4'
-  }
+  timeout: 30000
 })
 
 setupFaunaDB(client) 

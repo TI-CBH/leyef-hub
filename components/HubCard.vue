@@ -44,11 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  HomeIcon,
-  BriefcaseIcon,
-  ChartBarIcon
-} from '@heroicons/vue/outline'
+import { ArrowRightIcon } from '@heroicons/vue/24/outline/index.js'
 import type { Hub } from '~/types'
 
 const icons = {

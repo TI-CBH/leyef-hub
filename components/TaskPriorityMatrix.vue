@@ -112,6 +112,7 @@
 
 <script setup lang="ts">
 import type { Task } from '~/types'
+import { CheckCircleIcon } from '@heroicons/vue/24/outline/index.js'
 
 const props = defineProps<{
   tasks: Task[]

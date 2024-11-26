@@ -60,5 +60,17 @@ export default defineNuxtConfig({
         crawlLinks: true,
         routes: ['/']
       }
+    },
+  
+    // Build Configuration
+    build: {
+      transpile: ['@heroicons/vue']
+    },
+  
+    // Vite Configuration
+    vite: {
+      optimizeDeps: {
+        include: ['@heroicons/vue/24/outline']
+      }
     }
   })

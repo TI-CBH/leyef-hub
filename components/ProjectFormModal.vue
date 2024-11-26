@@ -95,6 +95,7 @@
 
 <script setup lang="ts">
 import type { Project } from '~/types'
+import { PencilIcon, TrashIcon } from '@heroicons/vue/24/outline/index.js'
 
 const props = defineProps<{
   project?: Project

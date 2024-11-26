@@ -30,6 +30,8 @@
 </template>
 
 <script setup lang="ts">
+import { HomeIcon, BriefcaseIcon, CurrencyDollarIcon } from '@heroicons/vue/24/outline/index.js'
+
 const navLinks = [
   { name: 'Home Hub', path: '/home-hub' },
   { name: 'Work Hub', path: '/work-hub' },

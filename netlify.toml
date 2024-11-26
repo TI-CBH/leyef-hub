@@ -5,8 +5,9 @@
 
 [[redirects]]
   from = "/*"
-  to = "/200.html"
+  to = "/index.html"
   status = 200
+  force = true
 
 [build.environment]
   NODE_VERSION = "18"
@@ -15,3 +16,11 @@
 [functions]
   node_bundler = "esbuild"
   included_files = ["server/chunks/**", "server/node_modules/**"]
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"

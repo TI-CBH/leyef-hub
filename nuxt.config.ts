@@ -58,7 +58,14 @@ export default defineNuxtConfig({
       preset: 'netlify',
       prerender: {
         crawlLinks: true,
-        routes: ['/']
+        routes: [
+          '/',
+          '/login',
+          '/dashboard',
+          '/home-hub',
+          '/work-hub',
+          '/business-hub'
+        ]
       }
     },
   

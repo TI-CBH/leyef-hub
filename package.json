@@ -14,14 +14,14 @@
     "@tailwindcss/forms": "^0.5.9",
     "@tailwindcss/typography": "^0.5.15",
     "@types/netlify-identity-widget": "^1.9.6",
-    "@types/node": "^22.9.3",
+    "@types/node": "^22.10.0",
     "dotenv": "^16.4.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.2"
   },
   "scripts": {
-    "setup-db": "ts-node scripts/setup-fauna.ts",
-    "check-db": "ts-node scripts/check-fauna.ts",
+    "setup-db": "ts-node --project tsconfig-scripts.json scripts/setup-fauna.ts",
+    "check-db": "ts-node --project tsconfig-scripts.json scripts/check-fauna.ts",
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",

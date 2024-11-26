@@ -50,21 +50,19 @@ export default defineNuxtConfig({
     nitro: {
       preset: 'netlify',
       prerender: {
-        crawlLinks: true,
-        routes: [
-          '/',
-          '/login',
-          '/dashboard',
-          '/home-hub',
-          '/work-hub',
-          '/business-hub'
-        ]
+        crawlLinks: false,
+        routes: ['/']
       }
     },
   
     // Build Configuration
     build: {
       transpile: ['@heroicons/vue']
+    },
+  
+    // Output Configuration
+    output: {
+      dir: 'dist'
     },
   
     // SSR Configuration

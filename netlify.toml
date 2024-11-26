@@ -1,6 +1,6 @@
 [build]
   command = "NITRO_PRESET=netlify npm run build"
-  publish = ".output/public"
+  publish = "dist"
   functions = ".output/server"
 
 [[redirects]]
@@ -10,7 +10,7 @@
 
 [[redirects]]
   from = "/*"
-  to = "/.netlify/functions/server"
+  to = "/index.html"
   status = 200
   force = true
 
@@ -18,18 +18,16 @@
   NODE_VERSION = "18"
   NITRO_PRESET = "netlify"
 
-[dev]
-  framework = "#custom"
-  command = "npm run dev"
-  targetPort = 3000
-  port = 8888
-  publish = ".output/public"
-  autoLaunch = true
-
 [functions]
-  directory = ".output/server"
   node_bundler = "esbuild"
-  external_node_modules = ["@prisma/client"]
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
 
 [[headers]]
   for = "/_nuxt/*"
@@ -40,8 +38,3 @@
   for = "/*.js"
   [headers.values]
     Content-Type = "application/javascript"
-
-[[headers]]
-  for = "/*.css"
-  [headers.values]
-    Content-Type = "text/css"

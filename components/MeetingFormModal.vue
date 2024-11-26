@@ -125,7 +125,8 @@
 </template>
 
 <script setup lang="ts">
-import { XMarkIcon } from '@heroicons/vue/24/outline'
+import pkg from '@heroicons/vue/24/outline'
+const { XMarkIcon } = pkg
 import type { Meeting } from '~/types'
 
 const props = defineProps<{

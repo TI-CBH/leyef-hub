@@ -29,7 +29,8 @@
 </template>
 
 <script setup lang="ts">
-import { ClockIcon, CheckCircleIcon } from '@heroicons/vue/24/outline'
+import pkg from '@heroicons/vue/24/outline'
+const { ClockIcon, CheckCircleIcon } = pkg
 import type { Project } from '~/types'
 import { useTasks } from '~/composables/useTasks'
 

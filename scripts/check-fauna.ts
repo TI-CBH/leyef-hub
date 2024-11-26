@@ -21,16 +21,11 @@ const checkCollections = async (client: Client) => {
   try {
     console.log('Checking FaunaDB connection and collections...')
     
-    // First test the connection
-    const dbInfo = await client.query(
-      q.Get(q.Database('leyef-hub'))
-    )
-    console.log('Successfully connected to database:', dbInfo)
-    
-    // Then check collections
+    // Using classic FQL syntax
     const collections = await client.query<FaunaResponse>(
       q.Paginate(
-        q.Collections()
+        q.Collections(),
+        { size: 100 }
       )
     )
     
@@ -38,15 +33,15 @@ const checkCollections = async (client: Client) => {
     if (!collections.data || collections.data.length === 0) {
       console.log('No collections found - database is empty')
     } else {
-      collections.data.forEach(col => {
-        console.log(`- ${col.name || col.toString()}`)
+      collections.data.forEach(ref => {
+        console.log(`- ${ref.toString()}`)
       })
     }
     
     // Check for required collections
     const requiredCollections = ['tasks', 'notes', 'projects', 'meetings']
-    const existingCollections = collections.data.map(col => 
-      typeof col === 'string' ? col : col.name || col.toString()
+    const existingCollections = collections.data.map(ref => 
+      ref.toString().replace('Collection("', '').replace('")', '')
     )
     
     console.log('\nRequired collections status:')
@@ -79,10 +74,7 @@ const client = new Client({
   secret: key,
   domain: 'db.fauna.com',
   scheme: 'https',
-  timeout: 30000,
-  headers: {
-    'X-Fauna-Source': 'Leyef-Hub'
-  }
+  timeout: 30000
 })
 
 checkCollections(client) 

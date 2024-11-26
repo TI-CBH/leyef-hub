@@ -60,11 +60,6 @@ export default defineNuxtConfig({
       transpile: ['@heroicons/vue']
     },
   
-    // Output Configuration
-    output: {
-      dir: 'dist'
-    },
-  
     // SSR Configuration
     ssr: true,
   

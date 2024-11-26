@@ -57,6 +57,9 @@ const client = new Client({
   secret: key,
   domain: 'db.fauna.com',
   scheme: 'https',
+  headers: {
+    'X-Fauna-Version': '4'
+  }
 })
 
 setupFaunaDB(client) 

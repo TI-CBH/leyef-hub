@@ -70,9 +70,11 @@ if (!key) {
 
 const client = new Client({
   secret: key,
-  // Add domain and scheme for newer Fauna versions
   domain: 'db.fauna.com',
   scheme: 'https',
+  headers: {
+    'X-Fauna-Source': 'leyef-hub'
+  }
 })
 
 checkCollections(client) 
